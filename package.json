@@ -1,0 +1,12 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "a backend code",
+  "main": "index.js",
+
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Om Babde",
+  "license": "ISC"
+}
