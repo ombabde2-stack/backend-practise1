@@ -118,6 +118,5 @@ dist
 .pnp.*
 
 #remove the package_lock.json file
-package-lock.json
 
 # End of https://mrkandreev.name/snippets/gitignore-generator/#Node
