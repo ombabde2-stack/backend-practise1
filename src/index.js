@@ -13,8 +13,12 @@ dotenv.config({
 })
 
 
-connectDB()
+connectDB()  //async method will return a promise after completion
 .then(()=> {
+    app.on("error", (error) => {
+            console.log("EROR", error);
+            throw error;
+    })
     app.listen(process.env.PORT || 8000, ()=> {
         console.log(`Server is running at port : ${process.env.PORT}`);
     });
@@ -42,7 +46,7 @@ connectDB()
 //     try{
 //        await mongoose.connect(`${process.env.MONGO_URL}/${DB_NAME}`);
 //        app.on("error", (error) => {
-//             console.log("ERRR", error);
+//             console.log("EROR", error);
 //             throw error;
 //        })
 

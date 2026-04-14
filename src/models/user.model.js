@@ -1,8 +1,9 @@
 import mongoose, {Schema} from "mongoose";
 import jwt from "jsonwebtoken"
+import bcrypt from "bcrypt"
 
 const userSchema = new mongoose.Schema({
-   username:{
+   username: {
       type: String,
       required: true,
       unique: true,
@@ -19,13 +20,12 @@ const userSchema = new mongoose.Schema({
    fullname:{
       type: String,
       required: true,
-      trim: true
+      trim: true,
+      index: true
    },
    avatar:{
       type: String, //clodinary url
       required: true,
-      trim: true,
-      index: true, 
    },
    coverImage: {
       type: String, //cloudinary url
@@ -33,34 +33,33 @@ const userSchema = new mongoose.Schema({
    watchHistory: {
       type:Schema.Types.ObjectId,
       ref:"Video"
-   },
+   }, 
    password: {
       type: String,
       required: ["true", 'Password is required']
    },
    refreshToken : {
-      type: String,
-
+      type: String
    }
 },
 {timestamps:true})
 
-userSchema.pre("save", async function () {
+userSchema.pre("save", async function(next) {
    if(!this.isModified("password")) return next();
 
    this.password = bcrypt.hash(this.password, 10)
    next()
 })
-
+ 
 userSchema.methods.isPasswordCorrect = async function(password){
-   return await bycrpt.compare(password, this.process);
+   return await bcrypt.compare(password, this.password);
 }
 
 userSchema.methods.generateAccessToken = function(){
-   jwt.sign(
+   return jwt.sign(
       {
-         _id: this._id;
-         email = this.email,
+         _id: this._id,
+         email: this.email,
          username: this.username,
          fullName: this.fullName
       },
@@ -72,7 +71,7 @@ userSchema.methods.generateAccessToken = function(){
 }
 
 userSchema.methods.generateRefreshToken = function(){
-   jwt.sign(
+   return jwt.sign(
       {
          _id: this._id,
       },
@@ -80,8 +79,7 @@ userSchema.methods.generateRefreshToken = function(){
       {
          expiresIn: process.env.REFRESH_TOKEN_EXPIRY
       }
-   )
-   
+   )  
 }
 
 export const User = mongoose.model("User",userSchema)
