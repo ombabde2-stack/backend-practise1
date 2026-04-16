@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "a backend code",
   "main": "index.js",
-  "type": "module",
+  "type":"module",
+
   "scripts": {
-    "start": "nodemon -r dotenv/config --experimental-json-modules src/index.js"
+    "start": "nodemon -r dotenv/config src/server.js"
   },
   "author": "Om Babde",
   "license": "ISC",
