@@ -197,6 +197,31 @@ const refreshAccessToken = asyncHandler(async(req,res) => {
 
 })
 
+const changeCurrentPassword = asyncHandler(async(req,res) => {
+
+    //1-Take user oldPass, newPass info from frontend
+    //2-Check weather oldPass matches mongoDB stored password
+    //3-Change old password to new Password in database
+    //4-Send "password send successfully" as ApiResponse
+
+    const {oldPassword,newPassword} = req.body;
+
+    const user = User.findById(req.user?._id);
+    
+    const isPasswordCorrect = user.isPasswordCorrect(oldPassword);
+    if(!isPasswordCorrect){
+        throw new ApiError(400,"Invalid old password")
+    }
+
+    user.password = newPassword;
+
+    return res
+       .status(200)      
+       .json(
+          new ApiResponse(404,"password changed successfully") 
+       )
+})
+
 export {registerUser,
         loginUser,
         logoutUser,
