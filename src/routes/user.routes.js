@@ -5,6 +5,7 @@ import {upload} from "../middlewares/multer.middleware.js"
 import { logoutUser } from "../controllers/user.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import { refreshAccessToken } from "../controllers/user.controller.js";
+import {updateUserCoverImage} from "../controllers/user.controller.js"
 
 const router = Router();
 
@@ -15,7 +16,7 @@ router.route("/register").post(
             maxCount: 1
         },
         {
-            name: "Cover Image",
+            name: "coverImage",
             maxCount: 1
         }
     ]),
