@@ -2,7 +2,7 @@
  import fs from "fs";
  import dotenv from "dotenv";
 
-dotenv.config({ override: true });
+// dotenv.config({ override: true });
 
 cloudinary.config({ 
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
@@ -59,6 +59,21 @@ const uploadOnCloudinary = async (localFilePath) => {
       return null; 
    }
 }
+
+//  const uploadOnCloudinary = async(localFilePath) => {
+//      try {
+//          if(!localFilePath) return null
+//          //upload the file on cloudinary
+//          const response = await cloudinary.uploader.upload(localFilePath, {
+//             resource_type: "auto"
+//          })
+//          //file has been uploaded successfully
+//          console.log("file is uploaded on cloudinary ", response.url)
+//          return response;
+//      } catch (error) {
+//          fs.unlinkSync(localFilePath)
+//      }
+// }
 
 
 export {uploadOnCloudinary, getLastCloudinaryError};
